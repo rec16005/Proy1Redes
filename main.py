@@ -130,6 +130,7 @@ if __name__ == '__main__':
             print('2 to delete account from server')
             print('3 to list users')
             print('4 to send a message')
+            print('5 to add friend')
             y = input(": ")
 
             #disconnect
@@ -147,7 +148,7 @@ if __name__ == '__main__':
             #list users
             elif(y == '3'):
                 print('List of Users:')
-                print(xmpp.client_roster)
+                print(xmpp.client_roster.keys())
                 print(' ')
             
             #send message
@@ -156,6 +157,12 @@ if __name__ == '__main__':
                 mssg = input('What message do you want to send?')
                 print('Sending...')
                 xmpp.send_message(mto=usr, mbody=mssg, mtype='chat')
+            
+            #add friend
+            elif(y == '5'):
+                friend = input('Who do you want to be friends with?')
+                xmpp.send_presence(pto=friend, ptype='subscribe')
+
        
     else:
         print("Unable to connect.")
