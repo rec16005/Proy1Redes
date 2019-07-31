@@ -99,6 +99,7 @@ if __name__ == '__main__':
     print('Type 2 to Register')
     x = input(': ') 
 
+    #get data
     if opts.jid is None:
         opts.jid = input("Username: " )
     if opts.password is None:
@@ -106,6 +107,7 @@ if __name__ == '__main__':
 
     xmpp = Chat(opts.jid, opts.password)
 
+    #if login
     if(x=='1'):
         xmpp.del_event_handler("register", xmpp.register)
 
@@ -117,14 +119,16 @@ if __name__ == '__main__':
     xmpp.register_plugin('xep_0077') # In-band Registration
     xmpp.register_plugin('xep_0060') # PubSub
  
+    #if unecrypted network
     xmpp['feature_mechanisms'].unencrypted_plain = True
     xmpp.ssl_version = ssl.PROTOCOL_TLS
 
-    #Conexion con el server
+    #Conection to server
     if xmpp.connect(('alumchat.xyz', 5222)):
         
         xmpp.process(block=False)
         while True:
+            #menu
             print('Press:')
             print('1 to disconnect')
             print('2 to delete account from server')
@@ -147,20 +151,20 @@ if __name__ == '__main__':
             
             #list users
             elif(y == '3'):
-                print('List of Users:')
+                print('List of Users: ')
                 print(xmpp.client_roster.keys())
                 print(' ')
             
             #send message
             elif(y == '4'):
-                usr = input('Who do you want to send a message?')
-                mssg = input('What message do you want to send?')
+                usr = input('Who do you want to send a message? ')
+                mssg = input('What message do you want to send? ')
                 print('Sending...')
                 xmpp.send_message(mto=usr, mbody=mssg, mtype='chat')
             
             #add friend
             elif(y == '5'):
-                friend = input('Who do you want to be friends with?')
+                friend = input('Who do you want to be friends with? ')
                 xmpp.send_presence(pto=friend, ptype='subscribe')
 
        
